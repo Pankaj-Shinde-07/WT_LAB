@@ -1,0 +1,41 @@
+body{
+  background:#f5f7fb;
+  color:#172033;
+  font-family:Arial,sans-serif;
+}
+.navbar{padding:13px 0}
+.intro{padding:30px 0 25px}
+.intro h1{font-size:2.25rem;font-weight:800;margin:8px 0}
+.intro p{color:#6c7788;margin:0}
+.card{border-radius:15px}
+.form-label{font-size:.85rem;font-weight:600}
+.form-control,.form-select{height:44px}
+.error{height:18px;color:#dc3545;font-size:.75rem;margin-top:3px}
+.invalid{border-color:#dc3545!important}
+.empty-box{
+  background:white;border:1px dashed #cbd3df;border-radius:12px;
+  text-align:center;padding:28px;color:#7a8492;
+}
+.empty-box i{font-size:2rem;display:block;margin-bottom:7px}
+.empty-box p{margin:0}
+.task-card{
+  background:white;border:1px solid #e3e7ed;border-radius:12px;
+  padding:17px;height:100%;transition:.2s;
+}
+.task-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px #0000000d}
+.task-card h6{font-weight:700;margin-bottom:7px}
+.task-meta{font-size:.8rem;color:#707b8a}
+.done{opacity:.65}
+.done h6{text-decoration:line-through}
+.json-box{
+  background:#172033;color:#d9f7ef;border-radius:12px;padding:16px;
+}
+.json-box pre{
+  margin:12px 0 0;max-height:180px;overflow:auto;
+  color:#b9eadf;font-size:.78rem;
+}
+footer{color:#788395;font-size:.8rem}
+@media(max-width:576px){
+  .intro h1{font-size:1.8rem}
+  .card{padding:18px!important}
+}

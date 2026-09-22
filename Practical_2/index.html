@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyBuddy | Task Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="#"><i class="bi bi-journal-check me-2"></i>StudyBuddy</a>
+    <span class="text-light small">Study Task Tracker</span>
+  </div>
+</nav>
+
+<main class="container py-4">
+  <section class="intro text-center">
+    <span class="badge text-bg-primary mb-2">JavaScript Practical No. 2</span>
+    <h1>Stay on top of your studies.</h1>
+    <p>Add a task, validate it, and save it to your study list.</p>
+  </section>
+
+  <section class="card shadow-sm border-0 p-4">
+    <h5 class="fw-bold mb-3"><i class="bi bi-plus-circle me-2"></i>Add Study Task</h5>
+
+    <form id="taskForm" novalidate>
+      <div class="row g-3">
+        <div class="col-md-5">
+          <label class="form-label">Task *</label>
+          <input id="task" class="form-control" placeholder="e.g. Practice Binary Search">
+          <div id="taskError" class="error"></div>
+        </div>
+
+        <div class="col-md-3">
+          <label class="form-label">Subject *</label>
+          <select id="subject" class="form-select">
+            <option value="">Select</option>
+            <option>DSA</option>
+            <option>Java</option>
+            <option>DBMS</option>
+            <option>Web Technology</option>
+          </select>
+          <div id="subjectError" class="error"></div>
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label">Hours *</label>
+          <input id="hours" type="number" class="form-control" placeholder="2">
+          <div id="hoursError" class="error"></div>
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+          <button class="btn btn-primary w-100" type="submit">
+            Add Task
+          </button>
+        </div>
+      </div>
+    </form>
+  </section>
+
+  <section class="mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h5 class="fw-bold mb-0">My Study Tasks</h5>
+      <button id="clearBtn" class="btn btn-sm btn-outline-danger">Clear All</button>
+    </div>
+
+    <div id="empty" class="empty-box">
+      <i class="bi bi-check2-circle"></i>
+      <p>No tasks added yet.</p>
+    </div>
+
+    <div id="taskList" class="row g-3"></div>
+  </section>
+
+  <section class="json-box mt-4">
+    <div class="d-flex justify-content-between align-items-center">
+      <strong>Stored Data — JSON</strong>
+      <span class="badge text-bg-secondary">Array → JSON</span>
+    </div>
+    <pre id="jsonOutput">[]</pre>
+  </section>
+</main>
+
+<footer class="text-center py-3">
+  StudyBuddy • HTML + CSS + JavaScript • Practical No. 2
+</footer>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="toast" class="toast">
+    <div class="toast-body"></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
