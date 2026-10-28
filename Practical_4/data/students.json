@@ -1,0 +1,50 @@
+[
+  {
+    "id": "std_1793128906374",
+    "name": "Pankaj Shinde",
+    "prn": "202401100005",
+    "email": "pankaj.shinde@mitaoe.ac.in",
+    "phone": "9823456789",
+    "department": "Software Engineering",
+    "semester": "Semester 5 (TY)",
+    "course": "Full-Stack Cloud Development",
+    "cgpa": "9.25",
+    "registeredAt": "2026-10-27"
+  },
+  {
+    "id": "std_1793128734620",
+    "name": "Pankaj Shinde",
+    "prn": "202401100005",
+    "email": "pankaj.shinde@mitaoe.ac.in",
+    "phone": "9823456789",
+    "department": "Software Engineering",
+    "semester": "Semester 5 (TY)",
+    "course": "Full-Stack Cloud Development",
+    "cgpa": "9.25",
+    "registeredAt": "2026-10-27"
+  },
+  {
+    "id": "std_101",
+    "name": "Pankaj Shinde",
+    "prn": "202401100005",
+    "email": "pankaj.shinde@mitaoe.ac.in",
+    "phone": "9823456789",
+    "department": "Software Engineering",
+    "semester": "Semester 5 (TY)",
+    "course": "Full-Stack Cloud Development",
+    "cgpa": "9.2",
+    "registeredAt": "2026-10-25"
+  },
+  {
+    "id": "std_102",
+    "name": "Aarav Deshmukh",
+    "prn": "202401100018",
+    "email": "aarav.deshmukh@mitaoe.ac.in",
+    "phone": "9890123456",
+    "department": "Computer Engineering",
+    "semester": "Semester 5 (TY)",
+    "course": "Artificial Intelligence & ML",
+    "cgpa": "8.8",
+    "registeredAt": "2026-10-26"
+  }
+]

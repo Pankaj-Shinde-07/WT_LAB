@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NodeRegister — Pure NodeJS Server-Side Validation Portal (WT Practical 4)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="top-bar">
+    <div><strong>MIT Academy of Engineering, Alandi, Pune</strong> | Department of Software Engineering</div>
+    <div>Student: <strong>Pankaj Shinde</strong> | PRN: <strong>202401100005</strong></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <span style="font-size: 1.5rem;">🎓</span>
+      <span>NodeRegister</span>
+      <span class="brand-badge">NodeJS Core (No Express)</span>
+    </a>
+    <div style="font-size: 0.88rem; color: #64748b; font-weight: 600;">
+      WT Practical No. 04: Server-Side Validation
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <header class="hero">
+    <h1>Student Enrollment with <span>Pure NodeJS Validation</span></h1>
+    <p>Demonstrating chunked HTTP request stream processing, pure Node.js modular validation, HTTP 400 rejection for malformed data, and persistent JSON storage without framework abstractions.</p>
+    
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+      <button onclick="fillValidDemo()" class="btn btn-demo-valid">
+        ✨ Fill Valid Student Demo
+      </button>
+      <button onclick="fillInvalidDemo()" class="btn btn-demo-invalid">
+        ⚠️ Fill Invalid Input Demo (Test HTTP 400)
+      </button>
+      <button onclick="resetForm()" class="btn btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.85rem;">
+        ↺ Clear Form
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content Layout -->
+  <main class="container">
+
+    <!-- Global Success / Error Feedback Banners -->
+    <div id="successBanner" class="alert-banner alert-success" style="display: none;">
+      <div id="successText"></div>
+    </div>
+    <div id="errorBanner" class="alert-banner alert-danger" style="display: none;">
+      <div id="errorText"></div>
+    </div>
+
+    <div class="grid-layout">
+
+      <!-- LEFT COLUMN: Enrollment Form -->
+      <section class="card">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-bottom: 0.4rem;">
+          Course Enrollment Application
+        </h2>
+        <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 1.5rem;">
+          All form fields are strictly validated on the Node.js server before acceptance.
+        </p>
+
+        <form id="enrollmentForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Student Full Name <span class="req">*</span></label>
+              <input type="text" id="name" class="form-control" placeholder="e.g. Pankaj Shinde" required />
+              <span id="err_name" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">12-Digit PRN Number <span class="req">*</span></label>
+              <input type="text" id="prn" class="form-control" placeholder="e.g. 202401100005" maxlength="12" required />
+              <span id="err_prn" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Institutional / Contact Email <span class="req">*</span></label>
+              <input type="email" id="email" class="form-control" placeholder="e.g. pankaj.shinde@mitaoe.ac.in" required />
+              <span id="err_email" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">10-Digit Mobile Number <span class="req">*</span></label>
+              <input type="tel" id="phone" class="form-control" placeholder="e.g. 9823456789" maxlength="10" required />
+              <span id="err_phone" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Academic Department <span class="req">*</span></label>
+              <select id="department" class="form-control" required>
+                <option value="">Select Branch</option>
+                <option value="Software Engineering">Software Engineering</option>
+                <option value="Computer Engineering">Computer Engineering</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
+                <option value="Mechanical Engineering">Mechanical Engineering</option>
+              </select>
+              <span id="err_department" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Current Semester <span class="req">*</span></label>
+              <select id="semester" class="form-control" required>
+                <option value="">Select Semester</option>
+                <option value="Semester 5 (TY)">Semester 5 (TY)</option>
+                <option value="Semester 6 (TY)">Semester 6 (TY)</option>
+                <option value="Semester 7 (Final Year)">Semester 7 (Final Year)</option>
+                <option value="Semester 8 (Final Year)">Semester 8 (Final Year)</option>
+              </select>
+              <span id="err_semester" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Elective Course Subject <span class="req">*</span></label>
+              <select id="course" class="form-control" required>
+                <option value="">Select Elective</option>
+                <option value="Full-Stack Cloud Development">Full-Stack Cloud Development</option>
+                <option value="Artificial Intelligence & ML">Artificial Intelligence & ML</option>
+                <option value="DevOps & Microservices">DevOps & Microservices</option>
+                <option value="Cybersecurity & Network Defense">Cybersecurity & Network Defense</option>
+                <option value="Data Science & Analytics">Data Science & Analytics</option>
+              </select>
+              <span id="err_course" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Cumulative GPA (0.00 – 10.00) <span class="req">*</span></label>
+              <input type="number" id="cgpa" class="form-control" placeholder="e.g. 9.20" step="0.01" min="0" max="10" required />
+              <span id="err_cgpa" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem; font-size: 1rem;">
+            Submit Enrollment to Node.js Server →
+          </button>
+        </form>
+      </section>
+
+      <!-- RIGHT COLUMN: Live Server Architecture & Metrics -->
+      <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+        <!-- Server Spec Card -->
+        <div class="card" style="background: #f8fafc;">
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.6rem;">
+            ⚙️ Node.js Architecture Summary
+          </h3>
+          <ul style="font-size: 0.86rem; color: #475569; padding-left: 1.2rem; line-height: 1.7;">
+            <li><strong>Core HTTP Engine:</strong> Built with native <code>http.createServer</code>.</li>
+            <li><strong>Stream Body Parser:</strong> Buffers chunked data via <code>req.on('data')</code> and parses on <code>req.on('end')</code>.</li>
+            <li><strong>Validation Module:</strong> Modular rules in <code>modules/validator.js</code>.</li>
+            <li><strong>Status Codes:</strong> Returns <code>201 Created</code> on success and <code>400 Bad Request</code> on validation failure.</li>
+            <li><strong>Persistence:</strong> Atomic synchronization into <code>data/students.json</code>.</li>
+          </ul>
+        </div>
+
+        <!-- Receipt / Registration Card -->
+        <div id="receiptCard" class="card" style="display: none; border-color: #10b981; background: #f0fdf4;">
+          <h3 style="color: #065f46; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">
+            ✅ Registration Verified & Issued
+          </h3>
+          <div id="receiptContent" style="font-size: 0.88rem; color: #1e3a8a; line-height: 1.6;"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- REGISTERED STUDENTS ROSTER TABLE -->
+    <div class="card" style="margin-top: 2.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a;">Registered Students Roster</h2>
+          <p style="color: #64748b; font-size: 0.86rem;">Records persisted in <code>data/students.json</code></p>
+        </div>
+        <button onclick="loadStudents()" class="btn btn-secondary btn-sm" style="font-size: 0.82rem; padding: 0.4rem 0.8rem;">
+          ↺ Refresh Roster
+        </button>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>PRN Number</th>
+              <th>Student Name</th>
+              <th>Department</th>
+              <th>Elective Course</th>
+              <th>Contact Details</th>
+              <th>CGPA</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="studentsTableBody">
+            <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading student records...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><strong>NodeRegister</strong> — Pure NodeJS Server-Side Development Application</p>
+    <p style="margin-top: 0.4rem; font-size: 0.82rem; color: #94a3b8;">
+      MIT Academy of Engineering, Alandi, Pune | Web Technology Laboratory Practical No. 04<br/>
+      Student: <strong>Pankaj Shinde</strong> | PRN: <strong>202401100005</strong> | Division A
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

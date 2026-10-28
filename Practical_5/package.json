@@ -1,0 +1,23 @@
+{
+  "name": "practical-05-expressjs",
+  "version": "1.0.0",
+  "description": "Practical No. 05: Web Application Framework with ExpressJS - HealthCare Appointment Portal with Server-Side Validation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "expressjs",
+    "server-side-validation",
+    "middleware",
+    "routing",
+    "mitaoe"
+  ],
+  "author": "Pankaj Shinde (PRN: 202401100005)",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

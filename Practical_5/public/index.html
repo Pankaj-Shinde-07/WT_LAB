@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HealthCare Express — ExpressJS Clinical Appointment Portal (WT Practical 5)</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div><strong>MIT Academy of Engineering, Alandi, Pune</strong> | Web Technology Laboratory</div>
+    <div>Student: <strong>Pankaj Shinde</strong> | PRN: <strong>202401100005</strong> | Division A</div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="/" class="nav-brand">
+      <span style="font-size: 1.5rem;">🏥</span>
+      <span>HealthCare Express</span>
+      <span class="brand-badge">Express.js Framework</span>
+    </a>
+    <div style="font-size: 0.88rem; color: #64748b; font-weight: 600;">
+      WT Practical No. 05: ExpressJS Server-Side Validation
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <h1>Clinical Appointments with <span>ExpressJS Validation</span></h1>
+    <p>Demonstrating modular Express routers, custom validation middleware, HTTP 400 error pipelines, JSON serialization, and clinic appointment lifecycle management.</p>
+    
+    <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+      <button onclick="fillValidPatient()" class="btn btn-demo-valid">
+        ✨ Fill Valid Patient Demo
+      </button>
+      <button onclick="fillInvalidPatient()" class="btn btn-demo-invalid">
+        ⚠️ Fill Invalid Input Demo (Test Express HTTP 400)
+      </button>
+      <button onclick="resetForm()" class="btn btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.85rem;">
+        ↺ Clear Form
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+
+    <!-- Metrics Row -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon teal">🩺</div>
+        <div>
+          <div class="metric-val" id="stat_total">0</div>
+          <div class="metric-label">Total Appointments</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon blue">✅</div>
+        <div>
+          <div class="metric-val" id="stat_confirmed">0</div>
+          <div class="metric-label">Confirmed Slots</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon amber">⏳</div>
+        <div>
+          <div class="metric-val" id="stat_pending">0</div>
+          <div class="metric-label">Pending Requests</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Banners -->
+    <div id="successBanner" class="alert-banner alert-success" style="display: none;">
+      <div id="successText"></div>
+    </div>
+    <div id="errorBanner" class="alert-banner alert-danger" style="display: none;">
+      <div id="errorText"></div>
+    </div>
+
+    <div class="grid-layout">
+
+      <!-- LEFT: Booking Form -->
+      <section class="card">
+        <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a; margin-bottom: 0.4rem;">
+          Book Doctor Consultation
+        </h2>
+        <p style="color: #64748b; font-size: 0.88rem; margin-bottom: 1.5rem;">
+          Inputs are sanitized and validated by Express server-side middleware before booking.
+        </p>
+
+        <form id="appointmentForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Patient Full Name <span class="req">*</span></label>
+              <input type="text" id="patientName" class="form-control" placeholder="e.g. Pankaj Shinde" required />
+              <span id="err_patientName" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Patient Age (1 - 120) <span class="req">*</span></label>
+              <input type="number" id="age" class="form-control" placeholder="e.g. 21" min="1" max="120" required />
+              <span id="err_age" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Gender <span class="req">*</span></label>
+              <select id="gender" class="form-control" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+              <span id="err_gender" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Contact Email <span class="req">*</span></label>
+              <input type="email" id="email" class="form-control" placeholder="e.g. pankajshinde0409@gmail.com" required />
+              <span id="err_email" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">10-Digit Mobile Number <span class="req">*</span></label>
+              <input type="tel" id="phone" class="form-control" placeholder="e.g. 9823456789" maxlength="10" required />
+              <span id="err_phone" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Medical Department / Specialist <span class="req">*</span></label>
+              <select id="department" class="form-control" required>
+                <option value="">Select Clinical Department</option>
+                <option value="Cardiology">Cardiology (Heart Specialist)</option>
+                <option value="Orthopedics">Orthopedics (Bone & Joint)</option>
+                <option value="Neurology">Neurology (Brain & Nerves)</option>
+                <option value="Pediatrics">Pediatrics (Child Health)</option>
+                <option value="Dermatology">Dermatology (Skin & Hair)</option>
+                <option value="General Medicine">General Medicine (Physician)</option>
+              </select>
+              <span id="err_department" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Consultation Date <span class="req">*</span></label>
+              <input type="date" id="date" class="form-control" required />
+              <span id="err_date" class="field-error-msg"></span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Preferred Time Slot <span class="req">*</span></label>
+              <select id="timeSlot" class="form-control" required>
+                <option value="">Select Time Slot</option>
+                <option value="09:30 AM - 10:00 AM">09:30 AM - 10:00 AM</option>
+                <option value="10:30 AM - 11:00 AM">10:30 AM - 11:00 AM</option>
+                <option value="11:30 AM - 12:00 PM">11:30 AM - 12:00 PM</option>
+                <option value="02:00 PM - 02:30 PM">02:00 PM - 02:30 PM</option>
+                <option value="04:00 PM - 04:30 PM">04:00 PM - 04:30 PM</option>
+              </select>
+              <span id="err_timeSlot" class="field-error-msg"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Symptoms / Reason for Consultation (Min 10 chars) <span class="req">*</span></label>
+            <textarea id="symptoms" class="form-control" rows="3" placeholder="Briefly describe patient symptoms or medical concern..." required></textarea>
+            <span id="err_symptoms" class="field-error-msg"></span>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem; font-size: 1rem;">
+            Confirm Booking with Express.js Server →
+          </button>
+        </form>
+      </section>
+
+      <!-- RIGHT: Express Architecture & Confirmation Card -->
+      <section style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+        <!-- Express Pipeline Card -->
+        <div class="card" style="background: #f8fafc;">
+          <h3 style="font-size: 1.1rem; font-weight: 800; color: #0f172a; margin-bottom: 0.6rem;">
+            ⚙️ Express.js Pipeline Architecture
+          </h3>
+          <ul style="font-size: 0.86rem; color: #475569; padding-left: 1.2rem; line-height: 1.7;">
+            <li><strong>Express Framework:</strong> Scalable application mounting sub-routers.</li>
+            <li><strong>Middleware Validator:</strong> <code>validateAppointmentMiddleware</code> executes before route handler.</li>
+            <li><strong>Error Handling:</strong> Returns structured JSON errors with <code>HTTP 400 Bad Request</code> on invalid data.</li>
+            <li><strong>Modular Routers:</strong> <code>appointmentRoutes.js</code> and <code>statsRoutes.js</code> handle endpoints.</li>
+            <li><strong>Persistence:</strong> Committed into <code>data/appointments.json</code>.</li>
+          </ul>
+        </div>
+
+        <!-- Appointment Card -->
+        <div id="appointmentReceiptCard" class="card" style="display: none; border-color: #0d9488; background: #f0fdfa;">
+          <h3 style="color: #0f766e; font-size: 1.15rem; font-weight: 800; margin-bottom: 0.5rem;">
+            🩺 Medical Appointment Confirmed
+          </h3>
+          <div id="receiptDetails" style="font-size: 0.88rem; color: #134e4a; line-height: 1.6;"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- APPOINTMENTS SCHEDULE TABLE -->
+    <div class="card" style="margin-top: 2.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: #0f172a;">Clinical Appointments Schedule</h2>
+          <p style="color: #64748b; font-size: 0.86rem;">Records persisted in <code>data/appointments.json</code> via Express API</p>
+        </div>
+        <button onclick="loadAppointments()" class="btn btn-secondary" style="font-size: 0.82rem; padding: 0.4rem 0.8rem;">
+          ↺ Refresh Schedule
+        </button>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Patient Details</th>
+              <th>Department & Doctor</th>
+              <th>Date & Slot</th>
+              <th>Symptoms</th>
+              <th>Status Pipeline</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="appointmentsTableBody">
+            <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading appointments...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p><strong>HealthCare Express</strong> — Web Application Framework with ExpressJS</p>
+    <p style="margin-top: 0.4rem; font-size: 0.82rem; color: #94a3b8;">
+      MIT Academy of Engineering, Alandi, Pune | Web Technology Laboratory Practical No. 05<br/>
+      Student: <strong>Pankaj Shinde</strong> | PRN: <strong>202401100005</strong> | Division A
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

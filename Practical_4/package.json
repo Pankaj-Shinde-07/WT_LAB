@@ -1,0 +1,19 @@
+{
+  "name": "practical-04-nodejs",
+  "version": "1.0.0",
+  "description": "Practical No. 04: Server-Side Development with Pure NodeJS - Student Registration Portal with Server-Side Validation",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "server-side-validation",
+    "http",
+    "routing",
+    "mitaoe"
+  ],
+  "author": "Pankaj Shinde (PRN: 202401100005)",
+  "license": "ISC"
+}
