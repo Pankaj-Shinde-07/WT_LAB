@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+    "author": "Robert C. Martin",
+    "isbn": "978-0132350884",
+    "genre": "Software Engineering",
+    "publicationYear": 2008,
+    "copies": 12,
+    "available": true,
+    "addedAt": "2026-10-19",
+    "updatedAt": "2026-10-28"
+  },
+  {
+    "id": 2,
+    "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+    "author": "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides",
+    "isbn": "978-0201633610",
+    "genre": "Computer Science",
+    "publicationYear": 1994,
+    "copies": 3,
+    "available": true,
+    "addedAt": "2026-10-20"
+  },
+  {
+    "id": 3,
+    "title": "The Pragmatic Programmer: Your Journey to Mastery",
+    "author": "David Thomas, Andrew Hunt",
+    "isbn": "978-0135957059",
+    "genre": "Software Engineering",
+    "publicationYear": 2019,
+    "copies": 4,
+    "available": true,
+    "addedAt": "2026-10-21"
+  },
+  {
+    "id": 4,
+    "title": "Introduction to Algorithms (CLRS)",
+    "author": "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein",
+    "isbn": "978-0262033848",
+    "genre": "Algorithms",
+    "publicationYear": 2009,
+    "copies": 6,
+    "available": true,
+    "addedAt": "2026-10-22"
+  },
+  {
+    "id": 5,
+    "title": "Atomic Habits: An Easy & Proven Way to Build Good Habits",
+    "author": "James Clear",
+    "isbn": "978-0735211292",
+    "genre": "Self-Help",
+    "publicationYear": 2018,
+    "copies": 0,
+    "available": false,
+    "addedAt": "2026-10-23"
+  },
+  {
+    "id": 6,
+    "title": "Full-Stack React & Node.js Mastery",
+    "author": "Pankaj Shinde",
+    "genre": "Web Development",
+    "isbn": "978-0132350884",
+    "publicationYear": 2026,
+    "copies": 10,
+    "available": true,
+    "addedAt": "2026-10-28"
+  },
+  {
+    "id": 7,
+    "title": "Full-Stack Web Engineering with Node.js & REST APIs",
+    "author": "Pankaj Shinde",
+    "genre": "Self-Help",
+    "isbn": "978-0134685991",
+    "publicationYear": 2026,
+    "copies": 12,
+    "available": true,
+    "addedAt": "2026-10-28"
+  }
+]

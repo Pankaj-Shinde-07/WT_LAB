@@ -1,0 +1,154 @@
+{
+  "info": {
+    "name": "Library Management RESTful API - Practical 06",
+    "_postman_id": "c1f7b8e9-2024-4110-0005-librestapi06",
+    "description": "Comprehensive Postman test collection for Web Technology Practical No. 06: RESTful API for Library Records Management with CRUD operations and Server-Side Validation. Developed by Pankaj Shinde (PRN: 202401100005).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. GET /api/health - Server Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5050/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "health"]
+        }
+      }
+    },
+    {
+      "name": "2. GET /api/stats - Aggregate Metrics",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5050/api/stats",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "stats"]
+        }
+      }
+    },
+    {
+      "name": "3. GET /api/books - READ ALL (Retrieve Catalog)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5050/api/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books"]
+        }
+      }
+    },
+    {
+      "name": "4. GET /api/books/:id - READ SINGLE (ID: 1)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5050/api/books/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books", "1"]
+        }
+      }
+    },
+    {
+      "name": "5. POST /api/books - CREATE (Add New Book)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"You Don't Know JS: Scope & Closures\",\n  \"author\": \"Kyle Simpson\",\n  \"genre\": \"JavaScript / Web Tech\",\n  \"isbn\": \"978-1449335588\",\n  \"publicationYear\": 2014,\n  \"copies\": 5\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5050/api/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books"]
+        }
+      }
+    },
+    {
+      "name": "6. PUT /api/books/:id - UPDATE (Edit Book Copies & Status)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"copies\": 8,\n  \"available\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5050/api/books/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books", "1"]
+        }
+      }
+    },
+    {
+      "name": "7. DELETE /api/books/:id - DELETE (Remove Book Record)",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5050/api/books/5",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books", "5"]
+        }
+      }
+    },
+    {
+      "name": "8. POST /api/books - VALIDATION REJECTION (Test HTTP 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"\",\n  \"author\": \"\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5050/api/books",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books"]
+        }
+      }
+    },
+    {
+      "name": "9. GET /api/books/999 - NOT FOUND (Test HTTP 404)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5050/api/books/999",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5050",
+          "path": ["api", "books", "999"]
+        }
+      }
+    }
+  ]
+}

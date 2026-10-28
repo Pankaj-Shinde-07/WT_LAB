@@ -1,0 +1,24 @@
+{
+  "name": "practical-06-restful-api",
+  "version": "1.0.0",
+  "description": "Practical No. 06: RESTful API for Library Records Management with CRUD Operations and Postman Verification",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "restful-api",
+    "crud",
+    "express",
+    "postman",
+    "library-management",
+    "mitaoe"
+  ],
+  "author": "Pankaj Shinde (PRN: 202401100005)",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}
